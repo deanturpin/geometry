@@ -28,19 +28,28 @@ onload = function() {
 	pixel.data[2] = 0
 	pixel.data[3] = 255
 
-	// requestAnimationFrame(draw)
 
-	// Main frame loop
-	// setInterval(function() {
-	
+	var offset = 1
+
+	function draw() {
+
 		// Clear the canvas
 		context.clearRect(0, 0, canvas.width, canvas.height)
 
-		for (var x = 0; x < width; ++x)
-			for (var y = 0; y < height; ++y)
-				context.putImageData(pixel, x, y)
+		for (var x = 0; x < width; ++x) {
 
-	// }, 2000);
+			const y = Math.floor(height/2
+				* Math.sin((x+offset) * 2 * Math.PI/360)) + height/2
+
+			context.putImageData(pixel, x, y)
+		}
+
+		++offset
+
+		requestAnimationFrame(draw)
+	}
+
+	requestAnimationFrame(draw)
 
 	// Periodically reload the page
 	setInterval(function() {
