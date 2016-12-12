@@ -26,7 +26,7 @@ onload = function() {
 	pixel.data[2] = 0
 	pixel.data[3] = 255
 
-	// X axis offset
+	// Revolution offset
 	var rd = 0
 
 	// Start animation
@@ -35,20 +35,24 @@ onload = function() {
 	// Draw a single frame
 	function draw() {
 
+		const xm = document.getElementById("x").value
+		const ym = document.getElementById("y").value
+		const trail = document.getElementById("trail").value
+
 		// Clear the canvas
 		context.clearRect(0, 0, width, height)
 
 		// Plot the shape
 		const d = 2 * Math.PI / 600
-		for (var r = 0; r < 2 * Math.PI/1.5; r += d) {
+		for (var r = 0; r < trail; r += d) {
 
-				var x = width/2 + Math.floor(Math.cos(r + rd) * width/2)
-				var y = height/2 + Math.floor(Math.sin(r + rd) * height/2)
+				var x = width/2 + Math.floor(Math.cos(r*xm + rd) * width/2)
+				var y = height/2 + Math.floor(Math.sin(r*ym + rd) * height/2)
 
 				context.putImageData(pixel, x, y)
 		}
 
-		// Move along the X axis
+		// Move around a bit
 		rd += d*4
 
 		// Get next frame
