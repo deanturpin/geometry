@@ -15,19 +15,20 @@ onload = function() {
 
 	// Set canvas size
 	const width = canvas.width = window.innerWidth * .9
-	const height = canvas.height = window.innerHeight * .8
+	const height = canvas.height = window.innerHeight * .9
 
 	// Create pixel
 	const pixel = context.createImageData(1, 1)
 
 	// Set colour
-	pixel.data[0] = 128
+	pixel.data[0] = 0
 	pixel.data[1] = 0
 	pixel.data[2] = 0
 	pixel.data[3] = 255
 
 	// X axis offset
-	var offset = 0
+	var rd = 0
+	var xd = 0
 
 	// Start animation
 	requestAnimationFrame(draw)
@@ -39,16 +40,18 @@ onload = function() {
 		context.clearRect(0, 0, width, height)
 
 		// Plot the shape
-		for (var x = 0; x < width; ++x) {
+		const d = 2 * Math.PI / 600
+		for (var r = 0; r < 2 * Math.PI/2; r += d) {
 
-			const y = Math.floor(height/2
-				* Math.sin((x+offset) * 2 * Math.PI/360)) + height/2
+			const x = xd + width/2 + Math.floor(Math.cos(r + rd) * width/2)
+			const y = height/2 + Math.floor(Math.sin(r + rd/4) * height/2)
 
 			context.putImageData(pixel, x, y)
 		}
 
 		// Move along the X axis
-		++offset
+		rd += d*4
+		// ++xd
 
 		// Get next frame
 		requestAnimationFrame(draw)
