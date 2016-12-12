@@ -41,12 +41,14 @@ onload = function() {
 
 		// Plot the shape
 		const d = 2 * Math.PI / 600
-		for (var r = 0; r < 2 * Math.PI/2; r += d) {
+		for (var r = 0; r < 2 * Math.PI/1.1; r += d) {
+			for (var c = 1; c < 5000; ++c) {
 
-			const x = xd + width/2 + Math.floor(Math.cos(r + rd) * width/2)
-			const y = height/2 + Math.floor(Math.sin(r + rd/4) * height/2)
+				var x = xd + width/2 + Math.floor(Math.cos(r + c*rd) * width/2)
+				var y = height/2 + Math.floor(Math.sin(r + c*rd/4) * height/2)
 
-			context.putImageData(pixel, x, y)
+				context.putImageData(pixel, x, y)
+			}
 		}
 
 		// Move along the X axis
