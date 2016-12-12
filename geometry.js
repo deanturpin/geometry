@@ -1,11 +1,5 @@
 "use strict"
 
-// Function to draw a single frame
-function draw() {
-
-	console.log("draw " + Date())
-}
-
 // Don't do anything until page has loaded completely
 onload = function() {
 
@@ -20,18 +14,40 @@ onload = function() {
 	var context = canvas.getContext("2d")
 
 	// Set canvas size
-	const width = window.innerWidth
-	const height = window.innerHeight
+	const width = 400 // window.innerWidth
+	const height = 400 // window.innerHeight
 	canvas.width = width
 	canvas.height = height
 
+	// Create pixel
+	const pixel = context.createImageData(1, 1)
+
+	// Set colour
+	pixel.data[0] = 128
+	pixel.data[1] = 0
+	pixel.data[2] = 0
+	pixel.data[3] = 255
+
 	// requestAnimationFrame(draw)
 
-	setInterval(function() {
+	// Main frame loop
+	// setInterval(function() {
 	
-		draw()
+		// Clear the canvas
+		context.clearRect(0, 0, canvas.width, canvas.height)
 
-	}, 1000);
+		for (var x = 0; x < width; ++x)
+			for (var y = 0; y < height; ++y)
+				context.putImageData(pixel, x, y)
+
+	// }, 2000);
+
+	// Periodically reload the page
+	setInterval(function() {
+
+		if (window.location.href.split("?").pop() === "reload")
+			window.location.reload()
+	}, 1000)
 
 	/*
 	// View port
