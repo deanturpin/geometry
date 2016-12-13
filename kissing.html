@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+
+<!-- Animation controls -->
+<form>
+<input id="X" value="1"> X
+<input id="Y" value="1"> Y
+<input id="T" value="3"> trail (radians)
+</form>
+
+<!-- Geometry script -->
+<script type="text/javascript">
+
+	"use strict"
+
+	// Don't do anything until page has loaded completely
+	onload = function() {
+
+		// Create a canvas element
+		const canvas = document.createElement("canvas")
+		const body = document.getElementsByTagName("body")[0]
+
+		// Add it to the DOM
+		body.appendChild(canvas)
+
+		// Define canvas (view port)
+		const context = canvas.getContext("2d")
+
+		// Set canvas size
+		const width = canvas.width = window.innerWidth * .95
+		const height = canvas.height = window.innerHeight * .92
+
+		// Create pixel
+		const pixelSize = 10
+		const pixel = context.createImageData(pixelSize, pixelSize)
+
+		// Set pixel colour
+		for (var p = 0; p < pixelSize; ++p) {
+
+			pixel.data[p*4 + 0] = 0
+			pixel.data[p*4 + 1] = 0
+			pixel.data[p*4 + 2] = 0
+			pixel.data[p*4 + 3] = 255
+		}
+
+		// Revolution offset
+		var rd = 0
+
+		// Get the controls
+		const X = document.getElementById("X")
+		const Y = document.getElementById("Y")
+		const T = document.getElementById("T")
+
+		function keydown(e) {
+
+			// Current value
+			const newValue = parseFloat(this.value)
+
+			// Amount to nudge each parameter
+			const increment = .05
+
+			// Check if we're received an up or a down
+			if (e.keyCode === 38)
+				this.value = newValue + increment
+			else if (e.keyCode === 40)
+				this.value = newValue - increment
+		}
+
+		// Add event listeners
+		X.addEventListener("keydown", keydown)
+		Y.addEventListener("keydown", keydown)
+		T.addEventListener("keydown", keydown)
+
+		// Start animation
+		requestAnimationFrame(draw)
+
+		// Minimum dimension
+		const minDim = (width < height ? width : height)
+
+		// Offset from the origin
+		var x = minDim/2
+		var y = minDim/2
+		var radius = minDim/2
+
+		// Draw a single frame
+		function draw() {
+
+			const xm = X.value
+			const ym = Y.value
+			const tm = T.value
+
+			// Clear the canvas
+			// context.clearRect(0, 0, width, height)
+
+			const radians = 2 * Math.PI
+
+			console.log(x, y, radius)
+
+			context.beginPath();
+			context.arc(
+					x,
+					y,
+					radius,
+					0,
+					radians,
+					false)
+
+			context.lineWidth = 1
+			context.strokeStyle = "black"
+			context.stroke()
+
+			// Move to next position
+			// y /= 2
+			radius /= 1.1
+
+			// Get next frame
+			requestAnimationFrame(draw)
+		}
+
+		// Periodically reload the page
+		setInterval(function() {
+
+			if (window.location.href.split("?").pop() === "reload")
+				window.location.reload()
+		}, 2000)
+	}
+</script>
