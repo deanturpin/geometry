@@ -14,11 +14,11 @@ onload = function() {
 	const context = canvas.getContext("2d")
 
 	// Set canvas size
-	const width = canvas.width = window.innerWidth * .9
-	const height = canvas.height = window.innerHeight * .9
+	const width = canvas.width = window.innerWidth * .95
+	const height = canvas.height = window.innerHeight * .92
 
 	// Create pixel
-	const pixelSize = 5
+	const pixelSize = 10
 	const pixel = context.createImageData(pixelSize, pixelSize)
 
 	// Set pixel colour
