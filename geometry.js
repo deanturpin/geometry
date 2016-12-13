@@ -18,13 +18,17 @@ onload = function() {
 	const height = canvas.height = window.innerHeight * .9
 
 	// Create pixel
-	const pixel = context.createImageData(1, 1)
+	const pixelSize = 5
+	const pixel = context.createImageData(pixelSize, pixelSize)
 
-	// Set colour
-	pixel.data[0] = 0
-	pixel.data[1] = 0
-	pixel.data[2] = 0
-	pixel.data[3] = 255
+	// Set pixel colour
+	for (var p = 0; p < pixelSize; ++p) {
+
+		pixel.data[p*4 + 0] = 0
+		pixel.data[p*4 + 1] = 0
+		pixel.data[p*4 + 2] = 0
+		pixel.data[p*4 + 3] = 255
+	}
 
 	// Revolution offset
 	var rd = 0
@@ -46,9 +50,11 @@ onload = function() {
 		const d = 2 * Math.PI / 600
 		for (var r = 0; r < trail; r += d) {
 
+				// Calculate coordinates
 				var x = width/2 + Math.floor(Math.cos(r*xm + rd) * width/2)
 				var y = height/2 + Math.floor(Math.sin(r*ym + rd) * height/2)
 
+				// Write pixel
 				context.putImageData(pixel, x, y)
 		}
 
