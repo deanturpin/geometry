@@ -38,17 +38,25 @@ onload = function() {
 	const Y = document.getElementById("Y")
 	const T = document.getElementById("T")
 
-	// Add event listeners
-	X.addEventListener("keydown", function(e) {
-		console.log(e.keyCode)
+	function keydown(e) {
 
-		var newValue = parseFloat(this.value)
+		// Current value
+		const newValue = parseFloat(this.value)
 
+		// Amount to nudge each parameter
+		const increment = .05
+
+		// Check if we're received an up or a down
 		if (e.keyCode === 38)
-			this.value = newValue + .1
+			this.value = newValue + increment
 		else if (e.keyCode === 40)
-			this.value = newValue - .1
-	})
+			this.value = newValue - increment
+	}
+
+	// Add event listeners
+	X.addEventListener("keydown", keydown)
+	Y.addEventListener("keydown", keydown)
+	T.addEventListener("keydown", keydown)
 
 	// Start animation
 	requestAnimationFrame(draw)
