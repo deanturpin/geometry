@@ -89,11 +89,9 @@
 			const tm = T.value
 
 			// Clear the canvas
-			// context.clearRect(0, 0, width, height)
+			context.clearRect(0, 0, width, height)
 
 			const radians = 2 * Math.PI
-
-			// console.log(x, y, radius)
 
 			context.beginPath();
 			context.arc(
@@ -104,8 +102,6 @@
 					radians,
 					false)
 
-			context.lineWidth = 1
-			context.strokeStyle = "black"
 			context.stroke()
 
 			// Move to next position
