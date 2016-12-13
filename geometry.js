@@ -36,19 +36,23 @@ onload = function() {
 	// Start animation
 	requestAnimationFrame(draw)
 
+	const X = document.getElementById("X")
+	const Y = document.getElementById("Y")
+	const T = document.getElementById("T")
+
 	// Draw a single frame
 	function draw() {
 
-		const xm = document.getElementById("x").value
-		const ym = document.getElementById("y").value
-		const trail = document.getElementById("trail").value
+		const xm = X.value
+		const ym = Y.value
+		const tm = T.value
 
 		// Clear the canvas
 		context.clearRect(0, 0, width, height)
 
 		// Plot the shape
 		const d = 2 * Math.PI / 600
-		for (var r = 0; r < trail; r += d) {
+		for (var r = 0; r < tm; r += d) {
 
 				// Calculate coordinates
 				var x = width/2 + Math.floor(Math.cos(r*xm + rd) * width/2)
