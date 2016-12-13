@@ -93,7 +93,7 @@
 
 			const radians = 2 * Math.PI
 
-			console.log(x, y, radius)
+			// console.log(x, y, radius)
 
 			context.beginPath();
 			context.arc(
@@ -109,8 +109,9 @@
 			context.stroke()
 
 			// Move to next position
-			// y /= 2
-			radius /= 1.1
+			y *= 1.003
+			x *= .995
+			radius /= 1.05
 
 			// Get next frame
 			requestAnimationFrame(draw)
