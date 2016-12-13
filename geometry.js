@@ -33,12 +33,25 @@ onload = function() {
 	// Revolution offset
 	var rd = 0
 
-	// Start animation
-	requestAnimationFrame(draw)
-
+	// Get the controls
 	const X = document.getElementById("X")
 	const Y = document.getElementById("Y")
 	const T = document.getElementById("T")
+
+	// Add event listeners
+	X.addEventListener("keydown", function(e) {
+		console.log(e.keyCode)
+
+		var newValue = parseFloat(this.value)
+
+		if (e.keyCode === 38)
+			this.value = newValue + .1
+		else if (e.keyCode === 40)
+			this.value = newValue - .1
+	})
+
+	// Start animation
+	requestAnimationFrame(draw)
 
 	// Draw a single frame
 	function draw() {
