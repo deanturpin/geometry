@@ -70,33 +70,31 @@
 		Y.addEventListener("keydown", keydown)
 		T.addEventListener("keydown", keydown)
 
-		// Start animation
-		requestAnimationFrame(draw)
-
 		// Minimum dimension
 		const minDim = (width < height ? width : height)
 
 		// Offset from the origin
-		var x = minDim/2
-		var y = minDim/2
+		const x = minDim/2
+		const y = minDim/2
 		var radius = minDim/2
+		var circles = 1
 
 		// Draw a single frame
-		function draw() {
+		setInterval(function() {
 
 			const xm = X.value
 			const ym = Y.value
 			const tm = T.value
 
 			// Clear the canvas
-			context.clearRect(0, 0, width, height)
+			// context.clearRect(0, 0, width, height)
 
 			const radians = 2 * Math.PI
 
 			context.beginPath();
 			context.arc(
 					x,
-					y,
+					y ,
 					radius,
 					0,
 					radians,
@@ -105,13 +103,15 @@
 			context.stroke()
 
 			// Move to next position
-			y *= 1.003
-			x *= .995
-			radius /= 1.05
+			// y *= 1.003
+			// x *= .995
+			radius *= .5
+			circles *= 2
 
-			// Get next frame
-			requestAnimationFrame(draw)
-		}
+			console.log(x, y, radius, circles)
+
+		}, 500)
+
 
 		// Periodically reload the page
 		setInterval(function() {
