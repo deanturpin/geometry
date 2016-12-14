@@ -74,13 +74,14 @@
 		const minDim = (width < height ? width : height)
 
 		// Offset from the origin
-		const x = minDim/2
-		const y = minDim/2
+		const x = width/2
+		const y = height/2
 		var radius = minDim/2
 		var circles = 1
 
 		// Draw a single frame
-		setInterval(function() {
+		var iterations = 0
+		const interval = setInterval(function() {
 
 			const xm = X.value
 			const ym = Y.value
@@ -91,24 +92,33 @@
 
 			const radians = 2 * Math.PI
 
-			context.beginPath();
-			context.arc(
-					x,
-					y ,
-					radius,
-					0,
-					radians,
-					false)
+			console.log(circles)
 
-			context.stroke()
+			for (var c = 0; c < circles; ++c) {
 
-			// Move to next position
-			// y *= 1.003
-			// x *= .995
+				const _x = radius * Math.cos(2 * Math.PI * c / circles)
+				const _y = radius * Math.sin(2 * Math.PI * c / circles)
+
+				console.log(_x, _y)
+
+				context.beginPath();
+				context.arc(
+						_x + x,
+						_y + y,
+						radius,
+						0,
+						radians,
+						false)
+
+				context.stroke()
+			}
+
+			// Shrink next circle
 			radius *= .5
 			circles *= 2
 
-			console.log(x, y, radius, circles)
+			if (iterations++ > 1)
+				clearInterval(interval)
 
 		}, 500)
 
