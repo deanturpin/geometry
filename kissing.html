@@ -82,12 +82,9 @@
 		const radians = 2 * Math.PI
 
 		// Create outer circle
-		function draw(x, y, radius, offset, depth, phase) {
-
-			// console.log(x, y, radius, depth)
+		function draw(x, y, radius, depth) {
 
 			if (depth > 0) {
-
 
 				context.beginPath();
 				context.arc(
@@ -100,22 +97,28 @@
 
 				context.stroke()
 
-				setTimeout(function() {
+				// Create inner circles
+				// Top and bottom
+				draw(x, y - radius/2, radius/2, depth - 1)
+				draw(x, y + radius/2, radius/2, depth - 1)
 
-					// Create inner circles
-					// Top and bottom
-					draw(x, y - radius/2, radius/2, offset, depth - 1, 0)
-					draw(x, y + radius/2, radius/2, offset, depth - 1, 0)
+				// Left and right
+				draw(x - 2*radius/3, y, radius/3, depth - 1)
+				draw(x + 2*radius/3, y, radius/3, depth - 1)
 
-					// Left and right
-					draw(x - offset, y, radius/3, offset/3, depth - 1, 1)
-					draw(x + offset, y, radius/3, offset/3, depth - 1, 1)
-				}, 250)
+				// draw(x + .26*radius, y, radius/16, depth - 1)
+
+				draw(x + 2*radius/3, y - radius/2, radius/6, depth - 1)
+				draw(x + 2*radius/3, y + radius/2, radius/6, depth - 1)
+				draw(x - 2*radius/3, y - radius/2, radius/6, depth - 1)
+				draw(x - 2*radius/3, y + radius/2, radius/6, depth - 1)
+
+				// draw(x - 2.5*radius/5, y + 3*radius/4, radius/11, depth - 1)
 			}
 		}
 
 		// Draw the first circle
-		draw(x, y, radius, 2*offset/3, 9)
+		draw(x, y, radius, 2)
 
 		// Periodically reload the page
 		setInterval(function() {
