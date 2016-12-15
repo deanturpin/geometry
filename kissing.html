@@ -79,51 +79,43 @@
 		var radius = minDim/2
 		var offset = minDim/2
 		var circles = 2
+		const radians = 2 * Math.PI
 
-		// Draw a single frame
-		var iterations = 0
-		const interval = setInterval(function() {
+		// Create outer circle
+		function draw(x, y, radius, offset, depth, phase) {
 
-			const xm = X.value
-			const ym = Y.value
-			const tm = T.value
+			// console.log(x, y, radius, depth)
 
-			// Clear the canvas
-			// context.clearRect(0, 0, width, height)
+			if (depth > 0) {
 
-			const radians = 2 * Math.PI
-
-			console.log(circles)
-
-			for (var c = 0; c < circles; ++c) {
-
-				const _x = offset * Math.cos(2 * Math.PI * c / circles)
-				const _y = offset * Math.sin(2 * Math.PI * c / circles)
-
-				console.log(x, y, _x, _y)
 
 				context.beginPath();
 				context.arc(
-						_x + x,
-						_y + y,
+						x,
+						y,
 						radius,
 						0,
 						radians,
 						false)
 
 				context.stroke()
+
+				setTimeout(function() {
+
+					// Create inner circles
+					// Top and bottom
+					draw(x, y - radius/2, radius/2, offset, depth - 1, 0)
+					draw(x, y + radius/2, radius/2, offset, depth - 1, 0)
+
+					// Left and right
+					draw(x - offset, y, radius/3, offset/3, depth - 1, 1)
+					draw(x + offset, y, radius/3, offset/3, depth - 1, 1)
+				}, 250)
 			}
+		}
 
-			// Shrink next circle
-			radius *= .25
-			offset *= .75
-			circles *= 2
-
-			if (iterations++ > 0)
-				clearInterval(interval)
-
-		}, 500)
-
+		// Draw the first circle
+		draw(x, y, radius, 2*offset/3, 9)
 
 		// Periodically reload the page
 		setInterval(function() {
