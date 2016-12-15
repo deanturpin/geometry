@@ -1,12 +1,5 @@
 <!DOCTYPE HTML>
 
-<!-- Animation controls -->
-<form>
-<input id="X" value="1"> X
-<input id="Y" value="1"> Y
-<input id="T" value="3"> trail (radians)
-</form>
-
 <!-- Geometry script -->
 <script type="text/javascript">
 
@@ -29,96 +22,50 @@
 		const width = canvas.width = window.innerWidth * .95
 		const height = canvas.height = window.innerHeight * .92
 
-		// Create pixel
-		const pixelSize = 10
-		const pixel = context.createImageData(pixelSize, pixelSize)
-
-		// Set pixel colour
-		for (var p = 0; p < pixelSize; ++p) {
-
-			pixel.data[p*4 + 0] = 0
-			pixel.data[p*4 + 1] = 0
-			pixel.data[p*4 + 2] = 0
-			pixel.data[p*4 + 3] = 255
-		}
-
-		// Revolution offset
-		var rd = 0
-
-		// Get the controls
-		const X = document.getElementById("X")
-		const Y = document.getElementById("Y")
-		const T = document.getElementById("T")
-
-		function keydown(e) {
-
-			// Current value
-			const newValue = parseFloat(this.value)
-
-			// Amount to nudge each parameter
-			const increment = .05
-
-			// Check if we're received an up or a down
-			if (e.keyCode === 38)
-				this.value = newValue + increment
-			else if (e.keyCode === 40)
-				this.value = newValue - increment
-		}
-
-		// Add event listeners
-		X.addEventListener("keydown", keydown)
-		Y.addEventListener("keydown", keydown)
-		T.addEventListener("keydown", keydown)
-
-		// Minimum dimension
-		const minDim = (width < height ? width : height)
-
 		// Offset from the origin
 		const x = width/2
 		const y = height/2
-		var radius = minDim/2
-		var offset = minDim/2
-		var circles = 2
-		const radians = 2 * Math.PI
 
-		// Create outer circle
-		function draw(x, y, radius, depth) {
+		// Circle wrapper
+		function circle(x, y, r) {
 
-			if (depth > 0) {
+			context.beginPath()
 
-				context.beginPath();
-				context.arc(
-						x,
-						y,
-						radius,
-						0,
-						radians,
-						false)
+			context.arc(
+				x,
+				y,
+				r,
+				0,
+				2 * Math.PI,
+				false)
 
-				context.stroke()
-
-				// Create inner circles
-				// Top and bottom
-				draw(x, y - radius/2, radius/2, depth - 1)
-				draw(x, y + radius/2, radius/2, depth - 1)
-
-				// Left and right
-				draw(x - 2*radius/3, y, radius/3, depth - 1)
-				draw(x + 2*radius/3, y, radius/3, depth - 1)
-
-				// draw(x + .26*radius, y, radius/16, depth - 1)
-
-				draw(x + 2*radius/3, y - radius/2, radius/6, depth - 1)
-				draw(x + 2*radius/3, y + radius/2, radius/6, depth - 1)
-				draw(x - 2*radius/3, y - radius/2, radius/6, depth - 1)
-				draw(x - 2*radius/3, y + radius/2, radius/6, depth - 1)
-
-				// draw(x - 2.5*radius/5, y + 3*radius/4, radius/11, depth - 1)
-			}
+			context.stroke()
 		}
 
+		// Start radius
+		const r = (width < height ? width : height) / 2
+
 		// Draw the first circle
-		draw(x, y, radius, 2)
+		circle(x, y, r)
+
+		// Create inner circles
+		// Top and bottom
+		circle(x, y - r/2, r/2)
+		circle(x, y + r/2, r/2)
+
+		// Left and right
+		circle(x - 2*r/3, y, r/3)
+		circle(x + 2*r/3, y, r/3)
+
+		// circle(x + .26*r, y, r/16)
+
+		// Corners
+		circle(x + 2*r/3, y - r/2, r/6)
+		circle(x + 2*r/3, y + r/2, r/6)
+		circle(x - 2*r/3, y - r/2, r/6)
+		circle(x - 2*r/3, y + r/2, r/6)
+
+		// circle(x - 2.5*r/5, y + 3*r/4, r/11)
 
 		// Periodically reload the page
 		setInterval(function() {
