@@ -1,1 +1,1 @@
-See the (correctly served version)[http://deanturpin.github.io/geometry].
+See the [correctly served version](http://deanturpin.github.io/geometry).
